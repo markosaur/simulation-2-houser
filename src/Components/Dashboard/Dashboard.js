@@ -21,13 +21,22 @@ export default class Dashboard extends Component {
             this.setState({houses: response.data})
         })
     }
+
+    handleDeleteHouse = (id) => {
+        Axios.delete(`/api/houses/${id}`)
+        .then(res=>{
+            this.getHouses()
+        }).catch(error => {
+            console.log(error)
+        })
+    }
     
 
 
     render() {
 
         const mappedHouses = this.state.houses.map((house, i) => {
-            return( <House house = {house} getHouses = {this.getHouses} /> )
+            return( <House key = {i} house = {house} getHouses = {this.getHouses} deleteHouse = {this.handleDeleteHouse} /> )
         })
 
         return (
