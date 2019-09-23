@@ -23,5 +23,14 @@ module.exports = {
             res.status(500).send("This did not add a house");
             console.log(err);
           });
+    },
+
+    deleteHouse: (req, res) => {
+        const db = req.app.get("db");
+        const {id} = req.params;
+        db.deleteHouse([id]).then(result=> {
+            res.status(200).send(result);
+
+        });
     }
-}
+};

@@ -25,3 +25,9 @@ values
 ('IHOP', '1111 Pancake Way', 'St George', 'UT', 80032);
 
 select * from houses
+
+
+DELETE from houses
+where id = 8;
+
+select * from houses;
