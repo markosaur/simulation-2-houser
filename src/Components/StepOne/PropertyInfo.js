@@ -104,11 +104,11 @@ export default class Wizard extends Component {
             <div>
                 Wizard
                 {/* <button onClick = {this.handleNewHouse}> Complete </button> */}
-                <input placeholder='name' onChange={(event)=>this.handleName(event.target.value)} />
-                <input placeholder='address' onChange={(event)=>this.handleAddress(event.target.value)} />
-                <input placeholder='city' onChange={(event)=>this.handleCity(event.target.value)} />
-                <input placeholder='state' onChange={(event)=>this.handleState(event.target.value)} />
-                <input placeholder='zip' onChange={(event)=>this.handleZip(event.target.value)} />
+                <input placeholder='name' onChange={(event)=>this.handleName(event.target.value)} value={this.state.name} />
+                <input placeholder='address' onChange={(event)=>this.handleAddress(event.target.value)} value={this.state.address}/>
+                <input placeholder='city' onChange={(event)=>this.handleCity(event.target.value)} value={this.state.city}/>
+                <input placeholder='state' onChange={(event)=>this.handleState(event.target.value)} value={this.state.state}/>
+                <input placeholder='zip' onChange={(event)=>this.handleZip(event.target.value)} value={this.state.zip}/>
                 <Link to='/Wizard/Step2'><button onClick = {()=> this.saveChanges()}>Next</button></Link>
             </div>
         )

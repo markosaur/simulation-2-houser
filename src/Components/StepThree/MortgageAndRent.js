@@ -1,27 +1,27 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import Axios from 'axios';
-import store, { UPDATE_MORTGAGE, UPDATE_RENT } from './../../ducks/store'
+import axios from 'axios';
+import store, { UPDATE_MORTGAGE, UPDATE_RENT, CANCEL_HOUSE } from './../../ducks/store'
 
 export default class MortgageAndRent extends Component {
     constructor(){
         super();
-        const reduxState = store.getState();        
+        // const reduxState = store.getState();        
         this.state = {
-           mortgage: reduxState.mortgage,
-           rent: reduxState.rent
+           mortgage: 0,
+           rent: 0
         }
     }
 
-    componentDidMount() {
-        store.subscribe(()=> {
-          const reduxState = store.getState();
-          this.setState({
-            mortgage: reduxState.mortgage,
-            rent: reduxState.rent
-          })
-        })
-      }
+    // componentDidMount() {
+    //     store.subscribe(()=> {
+    //       const reduxState = store.getState();
+    //       this.setState({
+    //         mortgage: reduxState.mortgage,
+    //         rent: reduxState.rent
+    //       })
+    //     })
+    //   }
 
         handleMortgage = (value) => {
             this.setState({
@@ -35,19 +35,19 @@ export default class MortgageAndRent extends Component {
             })
         }
 
-        saveChanges(){
-            store.dispatch({
-                type: UPDATE_MORTGAGE,
-                payload: this.state.mortgage
-            })
-            store.dispatch({
-                type: UPDATE_RENT,
-                payload: this.state.rent
-            })
-        }
+        // saveChanges(){
+        //     store.dispatch({
+        //         type: UPDATE_MORTGAGE,
+        //         payload: this.state.mortgage
+        //     })
+        //     store.dispatch({
+        //         type: UPDATE_RENT,
+        //         payload: this.state.rent
+        //     })
+        // }
 
         handleNewHouse = () => {
-            const {name, address, city, state, zip, image, mortgage, rent} = this.state
+            // const {name, address, city, state, zip, image, mortgage, rent} = this.state
             const reduxState = store.getState();        
             const {history} = this.props
             const newHouse = {
@@ -56,14 +56,19 @@ export default class MortgageAndRent extends Component {
                 city: reduxState.city,
                 state: reduxState.state,
                 zip: reduxState.zip,
-                image: reduxState.name,
+                image: reduxState.image,
                 mortgage: this.state.mortgage,
                 rent: this.state.rent
             }
-            Axios.post('api/houses', newHouse)
+            axios.post('/api/houses', newHouse)
             .then(() => {
+                store.dispatch({
+                    type: CANCEL_HOUSE,
+                })
                 history.push('/')
             });
+
+            //need to add code here to update state so that the values go back to zero , dispatch for cancel before history.push
         }
     
     render() {
@@ -71,10 +76,10 @@ export default class MortgageAndRent extends Component {
         return (
             <div>
                 {/* Wizard */}
-                <input placeholder='mortgage' onChange={(event)=>this.handleMortgage(event.target.value)} />
-                <input placeholder='rent' onChange={(event)=>this.handleRent(event.target.value)} />
+                <input placeholder='mortgage' onChange={(event)=>this.handleMortgage(event.target.value)} value={this.state.mortgage}/>
+                <input placeholder='rent' onChange={(event)=>this.handleRent(event.target.value)} value={this.state.rent}/>
                 <Link to= '/Wizard/Step2'><button onClick={()=> this.saveChanges}>Previous</button></Link>
-                <Link to= '/'><button onClick={()=> this.saveChanges} onClick ={this.handleNewHouse}> Complete </button></Link>
+                <button onClick ={this.handleNewHouse}> Complete </button>
             </div>
         )
     }

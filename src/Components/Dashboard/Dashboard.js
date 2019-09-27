@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import House from '../House/House'
 import {Link} from 'react-router-dom'
-import Axios from 'axios'
+import axios from 'axios'
 
 export default class Dashboard extends Component {
     constructor () {
@@ -12,18 +12,18 @@ export default class Dashboard extends Component {
         console.log(this.state.houses)
     }
     
-    componentDidMount = () =>{
+    componentDidMount() {
         this.getHouses();
         console.log('attempting to mount')
     }
-    getHouses(){
-        Axios.get('/api/houses').then((response)=>{
+    getHouses=()=>{
+        axios.get('/api/houses').then((response)=>{
             this.setState({houses: response.data})
         })
     }
 
     handleDeleteHouse = (id) => {
-        Axios.delete(`/api/houses/${id}`)
+        axios.delete(`/api/houses/${id}`)
         .then(res=>{
             this.getHouses()
         }).catch(error => {

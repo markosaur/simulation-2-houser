@@ -55,7 +55,7 @@ export default class Wizard extends Component {
         console.log(this.state)
         return (
             <div>
-                <input placeholder='image' onChange={(event)=>this.handleImage(event.target.value)} />
+                <input placeholder='image' onChange={(event)=>this.handleImage(event.target.value)} value={this.state.image}/>
                 <Link to= '/Wizard/Step1'><button onClick={()=>this.saveChanges()}>Previous</button></Link>
                 <Link to= '/Wizard/Step3'><button onClick={() => this.saveChanges()}>Next</button></Link>
             </div>
