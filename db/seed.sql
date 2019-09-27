@@ -31,3 +31,20 @@ DELETE from houses
 where id = 8;
 
 select * from houses;
+
+-- ALTER TABLE
+
+alter table houses
+add column image text;
+
+select * from houses;
+
+alter table houses
+add column mortgage integer;
+
+select * from houses;
+
+alter table houses
+add column rent integer;
+
+select * from houses;
